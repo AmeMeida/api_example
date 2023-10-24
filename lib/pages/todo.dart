@@ -17,16 +17,17 @@ class _TodoPageState extends State<TodoPage> {
 
   @override
   void initState() {
-    final todoController = Provider.of<TodoController>(context);
-    todoController.getById(widget.id).then((value) => todo = value);
+    final todoController = Provider.of<TodoController>(context, listen: false);
+    todoController.getById(widget.id).then((value) => setState(() => todo = value));
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Center(
-        child: todo == null ? TodoBox(todo: todo!) : const Text("Carregando..."),
+        child: todo != null ? TodoBox(todo: todo!) : const Text("Carregando..."),
       ),
     );
   }
